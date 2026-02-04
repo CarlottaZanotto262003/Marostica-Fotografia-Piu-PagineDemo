@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marostica Fotografia 1979 - Circolo Fotografico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0d0d0d;
+            --bg-darker: #080808;
+            --accent: #e74c3c;
+            --accent-hover: #c0392b;
+            --text-light: #f5f5f5;
+            --text-gray: #a0a0a0;
+            --card-bg: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        section {
+            display: none;
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        section.active {
+            display: block;
+            opacity: 1;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.8) 100%);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .header-landing {
+            background: transparent;
+            border: none;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1493863641943-9b68992a8d07?w=1920&q=80') center/cover no-repeat;
+            filter: brightness(0.4);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: var(--text-gray);
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            height: 350px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.7);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(231, 76, 60, 0.3);
+        }
+
+        .event-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 2rem;
+        }
+
+        .event-date {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .event-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-content p {
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(231, 76, 60, 0.2);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+            color: var(--text-light);
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            color: var(--text-gray);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .pricing-features li:before {
+            content: '✓ ';
+            color: var(--accent);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .contact-info {
+            padding: 2rem;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .info-item {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            width: 24px;
+            height: 24px;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            background: var(--accent);
+            transform: translateY(-5px) rotate(5deg);
+        }
+
+        .landing-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .landing-section::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(231, 76, 60, 0.1) 0%, transparent 70%);
+            top: -250px;
+            right: -250px;
+        }
+
+        .landing-content {
+            max-width: 600px;
+            text-align: center;
+            background: var(--card-bg);
+            padding: 4rem 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .landing-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        footer {
+            background: var(--bg-darker);
+            padding: 3rem 2rem 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .error-message {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown {
+                gap: 1rem;
+            }
+
+            .countdown-value {
+                font-size: 2rem;
+            }
+
+            .landing-content {
+                padding: 3rem 2rem;
+            }
+
+            .landing-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <nav>
+            <div class="logo">Marostica Fotografia</div>
+            <ul class="nav-links">
+                <li><a href="#" data-page="home">Home</a></li>
+                <li><a href="#" data-page="eventi">Eventi</a></li>
+                <li><a href="#" data-page="corsi">Corsi</a></li>
+                <li><a href="#" data-page="contatti">Contatti</a></li>
+                <li><a href="#" data-page="tesseramento" style="color: var(--accent);">Tesseramento</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="active">
+        <div class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-content">
+                <h1>Catturiamo emozioni dal 1979</h1>
+                <p>Il Circolo Fotografico di Marostica unisce passione, tecnica e creatività da oltre quattro decenni. Scopri il nostro mondo attraverso l'obiettivo.</p>
+                <a href="#" class="cta-button" data-page="eventi">Scopri i nostri eventi</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <h2 class="section-title">Best Shots</h2>
+            <p class="section-subtitle">Una selezione dei nostri migliori scatti</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800&q=80" alt="Paesaggio montano">
+                    <div class="gallery-overlay">
+                        <h3>Dolomiti al tramonto</h3>
+                        <p>Marco Rossi</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1502224562085-639556652f33?w=800&q=80" alt="Street Photography">
+                    <div class="gallery-overlay">
+                        <h3>Vita urbana</h3>
+                        <p>Laura Bianchi</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800&q=80" alt="Ritratto">
+                    <div class="gallery-overlay">
+                        <h3>Sguardi profondi</h3>
+                        <p>Giovanni Verdi</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80" alt="Natura">
+                    <div class="gallery-overlay">
+                        <h3>Nel cuore della natura</h3>
+                        <p>Sofia Neri</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="eventi">
+        <div class="container">
+            <h2 class="section-title">Eventi in Programma</h2>
+            <p class="section-subtitle">Partecipa alle nostre iniziative fotografiche</p>
+
+            <div class="event-grid">
+                <div class="event-card">
+                    <img src="https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=800&q=80" alt="Castello di Marostica" class="event-img">
+                    <div class="event-content">
+                        <span class="event-date">15-30 Marzo 2026</span>
+                        <h3>Mostra Sociale al Castello</h3>
+                        <p>La prestigiosa mostra annuale nel suggestivo scenario del Castello Superiore di Marostica. Oltre 100 opere dei nostri soci esposte nelle sale storiche.</p>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <img src="https://images.unsplash.com/photo-1484980972926-edee96e0960d?w=800&q=80" alt="Street Photography" class="event-img">
+                    <div class="event-content">
+                        <span class="event-date">12 Aprile 2026</span>
+                        <h3>Workshop Street Photography</h3>
+                        <p>Un'intera giornata dedicata alla fotografia urbana per le vie del centro storico. Condotto dal fotografo professionista Andrea Marcolini.</p>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80" alt="Serata fotografica" class="event-img">
+                    <div class="event-content">
+                        <span class="event-date">5 Maggio 2026</span>
+                        <h3>Serata d'Autore</h3>
+                        <p>Incontro con il fotografo naturalista Marco Colombo che presenterà il suo ultimo progetto fotografico sulle Alpi orientali. Ingresso gratuito per i soci.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="corsi">
+        <div class="container">
+            <h2 class="section-title">I Nostri Corsi</h2>
+            <p class="section-subtitle">Impara l'arte della fotografia con i nostri esperti</p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Corso Base</h3>
+                    <p>Fondamenti di fotografia per principianti</p>
+                    <div class="price">€150</div>
+                    <ul class="pricing-features">
+                        <li>8 lezioni teorico-pratiche</li>
+                        <li>Esposizione e diaframma</li>
+                        <li>Composizione fotografica</li>
+                        <li>Gestione della luce</li>
+                        <li>Uscite fotografiche guidate</li>
+                        <li>Materiale didattico incluso</li>
+                    </ul>
+                    <a href="#" class="cta-button" data-page="contatti">Iscriviti ora</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Corso Avanzato</h3>
+                    <p>Tecnica e Post-Produzione</p>
+                    <div class="price">€220</div>
+                    <ul class="pricing-features">
+                        <li>10 lezioni specialistiche</li>
+                        <li>Fotografia avanzata RAW</li>
+                        <li>Adobe Lightroom e Photoshop</li>
+                        <li>Ritocco professionale</li>
+                        <li>Gestione del colore</li>
+                        <li>Portfolio finale</li>
+                    </ul>
+                    <a href="#" class="cta-button" data-page="contatti">Iscriviti ora</a>
+                </div>
+
+                <div class="pricing-card">
+                    <h3>Workshop Weekend</h3>
+                    <p>Uscite sul campo</p>
+                    <div class="price">€90</div>
+                    <ul class="pricing-features">
+                        <li>Weekend intensivo</li>
+                        <li>Fotografia paesaggistica</li>
+                        <li>Fotografia naturalistica</li>
+                        <li>Tecniche di ripresa avanzate</li>
+                        <li>Guida esperta sul campo</li>
+                        <li>Revisione scatti in gruppo</li>
+                    </ul>
+                    <a href="#" class="cta-button" data-page="contatti">Iscriviti ora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contatti">
+        <div class="container">
+            <h2 class="section-title">Contattaci</h2>
+            <p class="section-subtitle">Siamo qui per rispondere a tutte le tue domande</p>
+
+            <div class="contact-container">
+                <div class="contact-form">
+                    <h3>Invia un messaggio</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nome e Cognome</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Messaggio</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Invia Messaggio</button>
+                        <div class="error-message" id="contactError"></div>
+                        <div class="success-message" id="contactSuccess">Messaggio inviato con successo! Ti risponderemo al più presto.</div>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <h3>Informazioni</h3>
+                    <div class="info-item">
+                        <svg class="info-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <div>
+                            <h4>Indirizzo</h4>
+                            <p>Via Cesare Battisti, 12<br>36063 Marostica (VI)<br>Italia</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <svg class="info-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <div>
+                            <h4>Email</h4>
+                            <p>info@marosticafotografia.it<br>corsi@marosticafotografia.it</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <svg class="info-icon" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                        </svg>
+                        <div>
+                            <h4>Telefono</h4>
+                            <p>+39 0424 123456<br>Lun-Ven: 17:00-19:00</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <div class="social-icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </div>
+                        <div class="social-icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </div>
+                        <div class="social-icon">
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tesseramento">
+        <div class="landing-section">
+            <div class="landing-content">
+                <h1>Entra a far parte della storia</h1>
+                <p style="color: var(--text-gray); font-size: 1.1rem; margin-bottom: 2rem;">
+                    Diventa socio del Circolo Fotografico Marostica 1979 e accedi a eventi esclusivi, corsi scontati e una community di fotografi appassionati.
+                </p>
+
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">00</span>
+                        <span class="countdown-label">Giorni</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">00</span>
+                        <span class="countdown-label">Ore</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">00</span>
+                        <span class="countdown-label">Minuti</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">00</span>
+                        <span class="countdown-label">Secondi</span>
+                    </div>
+                </div>
+
+                <form id="membershipForm">
+                    <div class="form-group">
+                        <label for="memberName">Nome completo</label>
+                        <input type="text" id="memberName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberEmail">Email</label>
+                        <input type="email" id="memberEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="memberPhone">Telefono</label>
+                        <input type="tel" id="memberPhone" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Richiedi Tesseramento 2026</button>
+                    <div class="error-message" id="memberError"></div>
+                    <div class="success-message" id="memberSuccess">Richiesta inviata! Ti contatteremo entro 24 ore.</div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" data-page="home">Home</a>
+                <a href="#" data-page="eventi">Eventi</a>
+                <a href="#" data-page="corsi">Corsi</a>
+                <a href="#" data-page="contatti">Contatti</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Marostica Fotografia 1979. Tutti i diritti riservati.<br>
+                Circolo Fotografico di Marostica - P.IVA 01234567890
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('[data-page]');
+        const header = document.getElementById('main-header');
+
+        function showPage(pageId) {
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            const targetSection = document.getElementById(pageId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+                
+                if (pageId === 'tesseramento') {
+                    header.classList.add('header-landing');
+                } else {
+                    header.classList.remove('header-landing');
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+
+        const contactForm = document.getElementById('contactForm');
+        const contactError = document.getElementById('contactError');
+        const contactSuccess = document.getElementById('contactSuccess');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            contactError.style.display = 'none';
+            contactSuccess.style.display = 'none';
+
+            if (!name || !email || !message) {
+                contactError.textContent = 'Tutti i campi sono obbligatori.';
+                contactError.style.display = 'block';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                contactError.textContent = 'Inserisci un indirizzo email valido.';
+                contactError.style.display = 'block';
+                return;
+            }
+
+            contactSuccess.style.display = 'block';
+            contactForm.reset();
+
+            setTimeout(() => {
+                contactSuccess.style.display = 'none';
+            }, 5000);
+        });
+
+        const membershipForm = document.getElementById('membershipForm');
+        const memberError = document.getElementById('memberError');
+        const memberSuccess = document.getElementById('memberSuccess');
+
+        membershipForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('memberName').value.trim();
+            const email = document.getElementById('memberEmail').value.trim();
+            const phone = document.getElementById('memberPhone').value.trim();
+
+            memberError.style.display = 'none';
+            memberSuccess.style.display = 'none';
+
+            if (!name || !email || !phone) {
+                memberError.textContent = 'Tutti i campi sono obbligatori.';
+                memberError.style.display = 'block';
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                memberError.textContent = 'Inserisci un indirizzo email valido.';
+                memberError.style.display = 'block';
+                return;
+            }
+
+            memberSuccess.style.display = 'block';
+            membershipForm.reset();
+
+            setTimeout(() => {
+                memberSuccess.style.display = 'none';
+            }, 5000);
+        });
+
+        function updateCountdown() {
+            const targetDate = new Date('2026-03-31T23:59:59').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
+
