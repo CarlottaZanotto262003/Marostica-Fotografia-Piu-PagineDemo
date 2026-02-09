@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html lang="it"><head>
+<html lang="it">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marostica Fotografia 1979 - Circolo Fotografico</title>
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&amp;family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
-        /* === CSS VARIABLES === */
-        :root {
-            --bg-dark: #0a0a0a;
-            --accent-red: #d32f2f;
-            --window-header: #1e1e1e;
-            --text-light: #e0e0e0;
-            --text-muted: #9e9e9e;
-            --card-bg: #1a1a1a;
-            --border-subtle: #2a2a2a;
-            --font-display: 'Playfair Display', serif;
-            --font-body: 'Montserrat', sans-serif;
-        }
-
-        /* === RESET & BASE === */
         * {
             margin: 0;
             padding: 0;
@@ -28,80 +21,41 @@
         }
 
         body {
-            font-family: var(--font-body);
-            background: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
+            background-color: #0d0d0d;
+            color: #e5e5e5;
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
         }
 
-        /* === NAVBAR === */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-subtle);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
         }
 
-        .navbar.scrolled {
-            background: rgba(10, 10, 10, 0.95);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        }
-
-        .navbar-brand {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-red);
-            text-decoration: none;
-            letter-spacing: 1px;
-        }
-
-        .navbar-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .navbar-links a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .navbar-links a:hover {
-            color: var(--accent-red);
-        }
-
+        /* Navigation */
         .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
+            width: 30px;
+            height: 20px;
+            position: relative;
             cursor: pointer;
-            padding: 5px;
+            z-index: 100;
         }
 
         .hamburger span {
-            width: 25px;
+            display: block;
+            width: 100%;
             height: 2px;
-            background: var(--text-light);
+            background-color: #fff;
+            position: absolute;
             transition: all 0.3s ease;
         }
 
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { bottom: 0; }
+
         .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(7px, 7px);
+            transform: rotate(45deg);
+            top: 9px;
         }
 
         .hamburger.active span:nth-child(2) {
@@ -109,973 +63,1152 @@
         }
 
         .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
+            transform: rotate(-45deg);
+            bottom: 9px;
         }
 
-        /* === HERO SECTION === */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            opacity: 0.3;
-            z-index: 0;
-        }
-
-        .hero-image {
-            flex: 1;
-            background-size: cover;
-            background-position: center;
-            filter: grayscale(100%);
-            transition: filter 0.6s ease, transform 0.6s ease;
-        }
-
-        .hero-image:hover {
-            filter: grayscale(0%);
-            transform: scale(1.05);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-        }
-
-        .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2.5rem, 6vw, 5rem);
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-        }
-
-        .hero h1 .accent {
-            color: var(--accent-red);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-        }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--accent-red);
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-family: var(--font-body);
-            font-size: 1rem;
-        }
-
-        .cta-button:hover {
-            background: #b71c1c;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.4);
-        }
-
-        /* === FEATURED CAROUSEL === */
-        .featured-section {
-            padding: 6rem 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .carousel-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .carousel {
-            display: flex;
-            gap: 2rem;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            padding: 1rem 0;
-        }
-
-        .carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .card {
-            min-width: 350px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-subtle);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(211, 47, 47, 0.3);
-        }
-
-        .card-image {
-            width: 100%;
-            height: 220px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-
-        .card-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--accent-red);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        .card-title {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
-            color: var(--text-light);
-        }
-
-        .card-text {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .countdown {
-            font-size: 1.1rem;
-            color: var(--accent-red);
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        /* === WINDOW LAYOUT (Pages) === */
-        .page-container {
-            display: none;
-            min-height: 100vh;
-            padding: 6rem 2rem 4rem;
-        }
-
-        .page-container.active {
-            display: block;
-        }
-
-        .window {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-subtle);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-        }
-
-        .window-header {
-            background: var(--window-header);
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .window-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .dot-red { background: #ff5f56; }
-        .dot-yellow { background: #ffbd2e; }
-        .dot-green { background: #27c93f; }
-
-        .window-title {
-            margin-left: 1rem;
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .window-content {
-            padding: 3rem;
-        }
-
-        /* === CORSO PAGE GRID === */
-        .corso-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .corso-details h2 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent-red);
-        }
-
-        .corso-info {
-            margin-bottom: 2rem;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: rgba(211, 47, 47, 0.1);
-            border-left: 3px solid var(--accent-red);
-            border-radius: 4px;
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: var(--accent-red);
-        }
-
-        .temi-list {
-            list-style: none;
-            margin: 1.5rem 0;
-        }
-
-        .temi-list li {
-            padding: 0.8rem 0;
-            border-bottom: 1px solid var(--border-subtle);
-            color: var(--text-muted);
-        }
-
-        .temi-list li:last-child {
-            border-bottom: none;
-        }
-
-        /* === FORM STYLING === */
-        .form-container {
-            background: rgba(30, 30, 30, 0.5);
-            padding: 2rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .form-title {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-light);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-light);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.9rem;
-            background: var(--bg-dark);
-            border: 1px solid var(--border-subtle);
-            border-radius: 4px;
-            color: var(--text-light);
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent-red);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        /* === EVENTI GRID === */
-        .eventi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .evento-card {
-            background: rgba(30, 30, 30, 0.5);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .evento-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-red);
-        }
-
-        .evento-card h3 {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--accent-red);
-        }
-
-        .evento-date {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        /* === CONTATTI === */
-        .contatti-content {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .map-placeholder {
-            width: 100%;
-            height: 300px;
-            background: rgba(30, 30, 30, 0.5);
-            border: 1px solid var(--border-subtle);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-style: italic;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: rgba(30, 30, 30, 0.5);
-            border-radius: 8px;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .social-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-button {
-            flex: 1;
-            padding: 1rem;
-            background: var(--accent-red);
-            color: white;
-            text-decoration: none;
-            text-align: center;
-            font-weight: 600;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .social-button:hover {
-            background: #b71c1c;
-            transform: translateY(-2px);
-        }
-
-        /* === POPUP === */
-        .popup {
-            display: none;
+        /* Overlay Menu */
+        .overlay-menu {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(13, 13, 13, 0.98);
+            z-index: 90;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
-        .popup.active {
-            display: flex;
+        .overlay-menu.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .popup-content {
-            background: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 100%;
-            border: 1px solid var(--border-subtle);
+        .overlay-menu nav {
             text-align: center;
         }
 
-        .popup-title {
-            font-family: var(--font-display);
-            font-size: 1.8rem;
+        .overlay-menu nav a {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #fff;
+            text-decoration: none;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .overlay-menu nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        .overlay-menu nav a:hover::after {
+            width: 80px;
+        }
+
+        /* Page Transitions */
+        .page {
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.5);
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
             margin-bottom: 1rem;
-            color: var(--accent-red);
         }
 
-        .popup-message {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #d4af37;
+            font-weight: 300;
         }
 
-        .popup-close {
-            padding: 0.8rem 2rem;
-            background: var(--accent-red);
-            color: white;
-            border: none;
-            border-radius: 4px;
+        /* Infinite Carousel */
+        .carousel-container {
+            width: 100%;
+            overflow: hidden;
+            padding: 3rem 0;
+            background: linear-gradient(to bottom, #0d0d0d, #1a1a1a, #0d0d0d);
+        }
+
+        .carousel-track {
+            display: flex;
+            animation: scroll 40s linear infinite;
+            width: max-content;
+        }
+
+        .carousel-item {
+            width: 300px;
+            height: 400px;
+            margin: 0 15px;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-item:hover img {
+            transform: scale(1.05);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Event Cards */
+        .event-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        /* Course Cards */
+        .course-card {
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .course-card:hover {
+            border-color: #d4af37;
+            transform: translateY(-5px);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #d4af37 0%, #c9a030 100%);
+            color: #0d0d0d;
             font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s ease;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
         }
 
-        .popup-close:hover {
-            background: #b71c1c;
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
         }
 
-        /* === RESPONSIVE === */
+        .btn-secondary {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            color: #d4af37;
+            border: 2px solid #d4af37;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #d4af37;
+            color: #0d0d0d;
+        }
+
+        /* Table Styles */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .pricing-table th {
+            background: #d4af37;
+            color: #0d0d0d;
+            padding: 1rem;
+            font-weight: 600;
+        }
+
+        .pricing-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .pricing-table tr:hover {
+            background: #1a1a1a;
+        }
+
+        /* Form Styles */
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 8px;
+            color: #e5e5e5;
+            font-family: 'Montserrat', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 1rem;
-            }
-
-            .navbar-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: rgba(10, 10, 10, 0.98);
-                flex-direction: column;
-                padding: 5rem 2rem;
-                transition: right 0.4s ease;
-                border-left: 1px solid var(--border-subtle);
-            }
-
-            .navbar-links.active {
-                right: 0;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .hero h1 {
+            .hero-title {
                 font-size: 2.5rem;
             }
 
-            .hero p {
-                font-size: 1rem;
+            .hero-subtitle {
+                font-size: 1.2rem;
             }
 
-            .card {
-                min-width: 300px;
+            .overlay-menu nav a {
+                font-size: 2rem;
             }
 
-            .window-content {
-                padding: 2rem 1.5rem;
-            }
-
-            .corso-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .eventi-grid {
-                grid-template-columns: 1fr;
+            .carousel-item {
+                width: 250px;
+                height: 350px;
             }
         }
 
-        @media (min-width: 769px) {
-            .corso-grid {
-                grid-template-columns: 1fr 1fr;
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
             }
 
-            .contatti-content {
-                grid-template-columns: 1fr 1fr;
+            .carousel-item {
+                width: 200px;
+                height: 300px;
             }
+        }
 
-            /* Locandina + Form su desktop: layout a 2 colonne */
-                grid-template-columns: 400px 1fr !important;
-            }
+        /* Upload Area */
+        .upload-area {
+            border: 3px dashed #333;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: #d4af37;
+            background: #1a1a1a;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: #d4af37;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
-    <!-- NAVBAR -->
-    <nav class="navbar">
-        <a href="#" class="navbar-brand" onclick="navigateTo('home')">MF79</a>
-        <ul class="navbar-links" id="navbarLinks">
-            <li><a onclick="navigateTo('home')">Home</a></li>
-            <li><a onclick="navigateTo('corsi')">Corsi</a></li>
-            <li><a onclick="navigateTo('eventi')">Eventi</a></li>
-            <li><a onclick="navigateTo('contatti')">Contatti</a></li>
-        </ul>
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+
+    <!-- Header with Hamburger Menu -->
+    <header class="fixed top-0 left-0 w-full z-50 px-6 py-6 flex justify-between items-center">
+        <div class="logo">
+            <h2 class="text-2xl font-bold text-white" style="font-family: 'Playfair Display', serif;">MF79</h2>
+        </div>
+        <div class="hamburger" id="hamburger">
             <span></span>
             <span></span>
             <span></span>
         </div>
-    </nav>
+    </header>
+
+    <!-- Overlay Menu -->
+    <div class="overlay-menu" id="overlayMenu">
+        <nav>
+            <a href="#" data-page="home">Home</a>
+            <a href="#" data-page="eventi">Eventi</a>
+            <a href="#" data-page="corsi">Corsi</a>
+            <a href="#" data-page="contatti">Contatti</a>
+            <a href="#" data-page="dashboard">Area Socio</a>
+        </nav>
+    </div>
 
     <!-- HOME PAGE -->
-    <div id="home" class="page-container active">
-        <!-- HERO SECTION -->
-        <section class="hero">
-            <div class="hero-bg" id="heroSlider"><div class="hero-image" style="background-image: url(&quot;https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=800&quot;);"></div><div class="hero-image" style="background-image: url(&quot;https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?w=800&quot;);"></div><div class="hero-image" style="background-image: url(&quot;https://images.unsplash.com/photo-1495121553079-4c61bcce1894?w=800&quot;);"></div><div class="hero-image" style="background-image: url(&quot;https://images.unsplash.com/photo-1606177321892-5d01e6e1e6b9?w=800&quot;);"></div></div>
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <img src="https://images.unsplash.com/photo-1502982899975-c58b0b6cbaee?w=1920&q=80&fit=crop" alt="Hero Image" class="hero-image">
             <div class="hero-content">
-                <h1>La Fotografia è una <span class="accent">Storia di Luce</span></h1>
-                <p>Dal 1979 coltiviamo l'arte fotografica nel cuore di Marostica</p>
-                <a href="#featured" class="cta-button">Scopri di più</a>
+                <h1 class="hero-title">Catturare l'Anima del Momento</h1>
+                <p class="hero-subtitle">Dal 1979, la passione per la fotografia</p>
             </div>
         </section>
 
-        <!-- FEATURED CAROUSEL -->
-        <section class="featured-section" id="featured">
-            <h2 class="section-title">In Primo Piano</h2>
-            <div class="carousel-container">
-                <div class="carousel" id="carousel">
-                    <!-- Card Corso -->
-                    <div class="card" onclick="navigateTo('corsi')">
-                        <div class="card-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800');">
-                            <span class="card-badge">Nuovo Corso</span>
+        <!-- Manifesto -->
+        <section class="py-20 px-6 max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-8" style="color: #d4af37;">Il Nostro Manifesto</h2>
+            <p class="text-xl text-gray-300 leading-relaxed mb-6">
+                Marostica Fotografia 1979 è più di un circolo: è una famiglia di artisti che condivide la stessa visione. 
+                Ogni scatto racconta una storia, ogni immagine è un'emozione catturata nel tempo.
+            </p>
+            <p class="text-lg text-gray-400 leading-relaxed">
+                Dal 1979, coltiviamo l'arte fotografica attraverso corsi, mostre ed eventi che celebrano la bellezza 
+                in tutte le sue forme. Crediamo nel potere dell'immagine di trasformare il mondo e ispirare le persone.
+            </p>
+        </section>
+
+        <!-- Infinite Carousel -->
+        <section class="carousel-container">
+            <h2 class="text-4xl font-bold text-center mb-12" style="color: #d4af37;">I Nostri Soci</h2>
+            <div class="carousel-track">
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400&q=80" alt="Socio 1"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&q=80" alt="Socio 2"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Socio 3"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80" alt="Socio 4"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Socio 5"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80" alt="Socio 6"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80" alt="Socio 7"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80" alt="Socio 8"></div>
+                <!-- Duplicate for seamless loop -->
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400&q=80" alt="Socio 1"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&q=80" alt="Socio 2"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Socio 3"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&q=80" alt="Socio 4"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" alt="Socio 5"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80" alt="Socio 6"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80" alt="Socio 7"></div>
+                <div class="carousel-item"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80" alt="Socio 8"></div>
+            </div>
+        </section>
+
+        <!-- Preview Eventi -->
+        <section class="py-20 px-6 max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12" style="color: #d4af37;">Prossimi Eventi</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="event-card">
+                    <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=600&q=80" alt="Mostra" class="event-image">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3">Mostra "Luci e Ombre"</h3>
+                        <p class="text-gray-400 mb-4">15 Marzo 2026 - Palazzo della Cultura</p>
+                        <p class="text-gray-300">Una retrospettiva sulle opere più significative dei nostri soci.</p>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80" alt="Workshop" class="event-image">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3">Workshop Ritratto</h3>
+                        <p class="text-gray-400 mb-4">22 Marzo 2026 - Sede MF79</p>
+                        <p class="text-gray-300">Tecniche avanzate per catturare l'essenza della persona.</p>
+                    </div>
+                </div>
+                <div class="event-card">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Serata" class="event-image">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-3">Serata d'Autore</h3>
+                        <p class="text-gray-400 mb-4">5 Aprile 2026 - Teatro Comunale</p>
+                        <p class="text-gray-300">Incontro con il fotografo internazionale Marco Bianchi.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="#" class="btn-primary" data-page="eventi">Vedi tutti i nostri eventi</a>
+            </div>
+        </section>
+
+        <!-- Preview Corsi -->
+        <section class="py-20 px-6 max-w-7xl mx-auto bg-gradient-to-b from-transparent via-gray-900 to-transparent">
+            <h2 class="text-4xl font-bold text-center mb-12" style="color: #d4af37;">Offerta Formativa</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="course-card">
+                    <div class="text-6xl text-center mb-4">📸</div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Corso Base</h3>
+                    <p class="text-gray-300 text-center mb-4">Impara le fondamenta della fotografia: composizione, esposizione e tecnica.</p>
+                    <p class="text-center text-gray-400">20 ore • €280</p>
+                </div>
+                <div class="course-card">
+                    <div class="text-6xl text-center mb-4">🎨</div>
+                    <h3 class="text-2xl font-bold mb-4 text-center">Corso Avanzato</h3>
+                    <p class="text-gray-300 text-center mb-4">Approfondisci le tecniche professionali e sviluppa il tuo stile personale.</p>
+                    <p class="text-center text-gray-400">30 ore • €420</p>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="#" class="btn-primary" data-page="corsi">Scopri l'offerta formativa</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 px-6 text-center text-gray-500 border-t border-gray-800">
+            <p>&copy; 2026 Marostica Fotografia 1979. Tutti i diritti riservati.</p>
+        </footer>
+    </div>
+
+    <!-- PAGINA EVENTI -->
+    <div id="eventi" class="page">
+        <section class="py-32 px-6">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-5xl font-bold mb-6 text-center" style="color: #d4af37;">I Nostri Eventi</h1>
+                <p class="text-xl text-gray-400 text-center mb-16 max-w-3xl mx-auto">
+                    Mostre, workshop e serate d'autore: scopri tutti gli appuntamenti del circolo fotografico.
+                </p>
+
+                <!-- Mostre -->
+                <div class="mb-20">
+                    <h2 class="text-3xl font-bold mb-8">Mostre</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?w=600&q=80" alt="Mostra 1" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Luci e Ombre</h3>
+                                <p class="text-gray-400 mb-3">15 Marzo 2026 • Palazzo della Cultura</p>
+                                <p class="text-gray-300 mb-4">Retrospettiva sulle opere più significative dei soci storici del circolo.</p>
+                                <a href="#" class="btn-secondary">Info &amp; Prenotazioni</a>
+                            </div>
                         </div>
-                        <div class="card-content">
-                            <h3 class="card-title">Corso Base 2026</h3>
-                            <p class="countdown" id="countdownPreview">Iscrizioni chiuse</p>
-                            <p class="card-text">Impara i fondamenti della fotografia con professionisti del settore</p>
-                            <button class="cta-button">Scopri di più</button>
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=600&q=80" alt="Mostra 2" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Paesaggi Veneti</h3>
+                                <p class="text-gray-400 mb-3">28 Aprile 2026 • Centro Culturale</p>
+                                <p class="text-gray-300 mb-4">Una collezione fotografica dedicata alle meraviglie del territorio veneto.</p>
+                                <a href="#" class="btn-secondary">Info &amp; Prenotazioni</a>
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1577083552431-6e5fd01988ec?w=600&q=80" alt="Mostra 3" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Urban Stories</h3>
+                                <p class="text-gray-400 mb-3">10 Giugno 2026 • Galleria Moderna</p>
+                                <p class="text-gray-300 mb-4">La città attraverso gli occhi dei nostri fotografi: storie urbane contemporanee.</p>
+                                <a href="#" class="btn-secondary">Info &amp; Prenotazioni</a>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Card Eventi -->
-                    <div class="card" onclick="navigateTo('eventi')">
-                        <div class="card-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800');"></div>
-                        <div class="card-content">
-                            <h3 class="card-title">Materiche Impressioni</h3>
-                            <p class="card-text">Mostra fotografica di Patrizia Tessarolo - Un viaggio artistico tra texture e luce</p>
-                            <button class="cta-button">Dettagli Mostra</button>
+                <!-- Workshop -->
+                <div class="mb-20">
+                    <h2 class="text-3xl font-bold mb-8">Workshop</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80" alt="Workshop 1" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Ritratto Professionale</h3>
+                                <p class="text-gray-400 mb-3">22 Marzo 2026 • 9:00-18:00</p>
+                                <p class="text-gray-300 mb-4">Tecniche avanzate di illuminazione e direzione del soggetto.</p>
+                                <a href="#" class="btn-secondary">Iscriviti</a>
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=80" alt="Workshop 2" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Fotografia Notturna</h3>
+                                <p class="text-gray-400 mb-3">12 Aprile 2026 • 20:00-01:00</p>
+                                <p class="text-gray-300 mb-4">Catturare la magia della notte: lunghe esposizioni e light painting.</p>
+                                <a href="#" class="btn-secondary">Iscriviti</a>
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&q=80" alt="Workshop 3" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Street Photography</h3>
+                                <p class="text-gray-400 mb-3">3 Maggio 2026 • 10:00-17:00</p>
+                                <p class="text-gray-300 mb-4">L'arte di catturare momenti autentici nella vita urbana quotidiana.</p>
+                                <a href="#" class="btn-secondary">Iscriviti</a>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Card Social -->
-                    <div class="card" onclick="window.open('https://www.instagram.com/marosticafotografia1979/', '_blank')">
-                        <div class="card-image" style="background-image: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);"></div>
-                        <div class="card-content">
-                            <h3 class="card-title">Seguici su Instagram</h3>
-                            <p class="card-text">Resta aggiornato su tutte le nostre attività e scopri le opere dei nostri soci</p>
-                            <button class="cta-button">@marosticafotografia1979</button>
+                <!-- Serate d'Autore -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-8">Serate d'Autore</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80" alt="Serata 1" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Incontro con Marco Bianchi</h3>
+                                <p class="text-gray-400 mb-3">5 Aprile 2026 • Teatro Comunale • Ore 21:00</p>
+                                <p class="text-gray-300 mb-4">Il celebre fotografo di reportage internazionale condivide la sua esperienza.</p>
+                                <a href="#" class="btn-secondary">Prenota il posto</a>
+                            </div>
+                        </div>
+                        <div class="event-card">
+                            <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&q=80" alt="Serata 2" class="event-image">
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold mb-3">Laura Rossi: Fotografia d'Arte</h3>
+                                <p class="text-gray-400 mb-3">25 Maggio 2026 • Auditorium MF79 • Ore 20:30</p>
+                                <p class="text-gray-300 mb-4">Dall'idea alla realizzazione: il processo creativo di una fotografa d'arte.</p>
+                                <a href="#" class="btn-secondary">Prenota il posto</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <footer class="py-12 px-6 text-center text-gray-500 border-t border-gray-800">
+            <p>&copy; 2026 Marostica Fotografia 1979. Tutti i diritti riservati.</p>
+        </footer>
     </div>
 
-    <!-- CORSI PAGE -->
-    <div id="corsi" class="page-container">
-        <div class="window">
-            <div class="window-header">
-                <span class="window-dot dot-red"></span>
-                <span class="window-dot dot-yellow"></span>
-                <span class="window-dot dot-green"></span>
-                <span class="window-title">Corsi di Fotografia</span>
-            </div>
-            <div class="window-content">
-                <div class="corso-grid">
-                    <!-- Dettagli Corso -->
-                    <div class="corso-details">
-                        <h2>Corso Base di Fotografia 2026</h2>
-                        <div class="corso-info">
-                            <div class="info-item">
-                                <span class="info-label">Inizio:</span>
-                                <span>26 Gennaio 2026</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Scadenza Iscrizioni:</span>
-                                <span id="countdownFull">Iscrizioni chiuse</span>
-                            </div>
-                            <div class="info-item">
-                                <span class="info-label">Sede:</span>
-                                <span>Corso Mazzini 77, Marostica</span>
+    <!-- PAGINA CORSI -->
+    <div id="corsi" class="page">
+        <section class="py-32 px-6">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-5xl font-bold mb-6 text-center" style="color: #d4af37;">Offerta Formativa</h1>
+                <p class="text-xl text-gray-400 text-center mb-16 max-w-3xl mx-auto">
+                    Dal livello base all'avanzato, i nostri corsi ti accompagnano nel viaggio verso l'eccellenza fotografica.
+                </p>
+
+                <!-- Corso Base -->
+                <div class="mb-16 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="md:w-1/3">
+                            <img src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740?w=600&q=80" alt="Corso Base" class="rounded-lg shadow-2xl">
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="inline-block bg-gray-700 text-white px-4 py-2 rounded-full text-sm mb-4">LIVELLO BASE</div>
+                            <h2 class="text-4xl font-bold mb-4">Fondamenti di Fotografia</h2>
+                            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                                Un percorso completo per principianti che desiderano comprendere le basi della fotografia. 
+                                Imparerai a utilizzare correttamente la tua fotocamera, comprendere l'esposizione, la composizione 
+                                e le tecniche fondamentali per creare immagini di qualità.
+                            </p>
+                            <ul class="text-gray-300 space-y-3 mb-6">
+                                <li>✓ Conoscenza della fotocamera e delle sue funzioni</li>
+                                <li>✓ Triangolo dell'esposizione: ISO, tempi, diaframma</li>
+                                <li>✓ Regole di composizione e inquadratura</li>
+                                <li>✓ Introduzione alla post-produzione digitale</li>
+                                <li>✓ Esercitazioni pratiche guidate</li>
+                            </ul>
+                            <div class="flex flex-wrap gap-4">
+                                <span class="text-gray-400"><strong class="text-white">Durata:</strong> 20 ore (10 lezioni)</span>
+                                <span class="text-gray-400"><strong class="text-white">Prezzo:</strong> €280</span>
+                                <span class="text-gray-400"><strong class="text-white">Inizio:</strong> Ottobre 2026</span>
                             </div>
                         </div>
-
-                        <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin: 2rem 0 1rem; color: var(--accent-red);">Programma del Corso</h3>
-                        <ul class="temi-list">
-                            <li>📷 Introduzione alle fotocamere digitali e reflex</li>
-                            <li>🔍 Diaframma: controllo della profondità di campo</li>
-                            <li>⏱️ Tempi di scatto e gestione del movimento</li>
-                            <li>💡 Esposizione e bilanciamento del bianco</li>
-                            <li>🎨 Adobe Photoshop: post-produzione professionale</li>
-                        </ul>
-
-                        <button class="cta-button" style="margin-top: 2rem;" onclick="alert('Download della brochure in PDF - Funzione demo')">
-                            📄 Scarica Brochure PDF
-                        </button>
                     </div>
+                </div>
 
-                    <!-- Form Iscrizione -->
-                    <div class="form-container">
-                        <h3 class="form-title">Iscriviti al Corso</h3>
-                        <form id="corsoForm" onsubmit="handleCorsoSubmit(event)">
-                            <div class="form-group">
-                                <label for="nome">Nome e Cognome *</label>
-                                <input type="text" id="nome" name="nome" required="">
+                <!-- Corso Avanzato -->
+                <div class="mb-16 bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+                        <div class="md:w-1/3">
+                            <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&q=80" alt="Corso Avanzato" class="rounded-lg shadow-2xl">
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="inline-block bg-yellow-700 text-white px-4 py-2 rounded-full text-sm mb-4">LIVELLO AVANZATO</div>
+                            <h2 class="text-4xl font-bold mb-4">Fotografia Professionale</h2>
+                            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                                Perfeziona le tue competenze e sviluppa uno stile personale. Questo corso approfondisce tecniche 
+                                avanzate di illuminazione, gestione del colore, post-produzione professionale e ti prepara 
+                                a lavorare in diversi generi fotografici.
+                            </p>
+                            <ul class="text-gray-300 space-y-3 mb-6">
+                                <li>✓ Tecniche avanzate di illuminazione in studio e naturale</li>
+                                <li>✓ Gestione professionale del colore e del RAW</li>
+                                <li>✓ Post-produzione avanzata con Lightroom e Photoshop</li>
+                                <li>✓ Sviluppo del portfolio e del personal branding</li>
+                                <li>✓ Progetti fotografici personalizzati con tutoraggio</li>
+                            </ul>
+                            <div class="flex flex-wrap gap-4">
+                                <span class="text-gray-400"><strong class="text-white">Durata:</strong> 30 ore (12 lezioni)</span>
+                                <span class="text-gray-400"><strong class="text-white">Prezzo:</strong> €420</span>
+                                <span class="text-gray-400"><strong class="text-white">Inizio:</strong> Novembre 2026</span>
                             </div>
-                            <div class="form-group">
-                                <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" required="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Workshop Specialistici -->
+                <div class="mb-16 bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="md:w-1/3">
+                            <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=80" alt="Workshop" class="rounded-lg shadow-2xl">
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="inline-block bg-red-700 text-white px-4 py-2 rounded-full text-sm mb-4">WORKSHOP SPECIALISTICI</div>
+                            <h2 class="text-4xl font-bold mb-4">Percorsi Tematici</h2>
+                            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                                Workshop intensivi dedicati a specifici generi fotografici. Ideali per chi vuole approfondire 
+                                un ambito particolare o acquisire competenze mirate in poco tempo.
+                            </p>
+                            <ul class="text-gray-300 space-y-3 mb-6">
+                                <li>✓ Ritratto e fotografia di persone</li>
+                                <li>✓ Paesaggio e natura</li>
+                                <li>✓ Street photography e reportage</li>
+                                <li>✓ Fotografia notturna e astrofotografia</li>
+                                <li>✓ Macro e still life</li>
+                            </ul>
+                            <div class="flex flex-wrap gap-4">
+                                <span class="text-gray-400"><strong class="text-white">Durata:</strong> 8 ore (full day)</span>
+                                <span class="text-gray-400"><strong class="text-white">Prezzo:</strong> €120-€180</span>
+                                <span class="text-gray-400"><strong class="text-white">Date:</strong> Variabili</span>
                             </div>
-                            <div class="form-group">
-                                <label for="telefono">Telefono *</label>
-                                <input type="tel" id="telefono" name="telefono" required="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabella Comparativa -->
+                <div class="mt-20">
+                    <h2 class="text-3xl font-bold mb-8 text-center">Confronta i Corsi</h2>
+                    <div class="overflow-x-auto">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Caratteristica</th>
+                                    <th>Base</th>
+                                    <th>Avanzato</th>
+                                    <th>Workshop</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Durata</strong></td>
+                                    <td>20 ore</td>
+                                    <td>30 ore</td>
+                                    <td>8 ore</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Numero Lezioni</strong></td>
+                                    <td>10 lezioni</td>
+                                    <td>12 lezioni</td>
+                                    <td>1 full day</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Livello</strong></td>
+                                    <td>Principiante</td>
+                                    <td>Intermedio/Avanzato</td>
+                                    <td>Tutti i livelli</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Teoria</strong></td>
+                                    <td>60%</td>
+                                    <td>40%</td>
+                                    <td>20%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pratica</strong></td>
+                                    <td>40%</td>
+                                    <td>60%</td>
+                                    <td>80%</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tutoraggio Individuale</strong></td>
+                                    <td>-</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Attestato</strong></td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                    <td>✓</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Prezzo</strong></td>
+                                    <td><strong style="color: #d4af37;">€280</strong></td>
+                                    <td><strong style="color: #d4af37;">€420</strong></td>
+                                    <td><strong style="color: #d4af37;">€120-€180</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="text-center mt-16">
+                    <p class="text-xl text-gray-300 mb-8">Pronto a iniziare il tuo percorso fotografico?</p>
+                    <a href="#" class="btn-primary" data-page="contatti">Contattaci per iscriverti</a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="py-12 px-6 text-center text-gray-500 border-t border-gray-800">
+            <p>&copy; 2026 Marostica Fotografia 1979. Tutti i diritti riservati.</p>
+        </footer>
+    </div>
+
+    <!-- PAGINA CONTATTI -->
+    <div id="contatti" class="page">
+        <section class="py-32 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-5xl font-bold mb-6 text-center" style="color: #d4af37;">Contattaci</h1>
+                <p class="text-xl text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+                    Hai domande sui nostri corsi o eventi? Vuoi unirti al circolo? Siamo qui per aiutarti.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Form Contatti -->
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6">Invia un Messaggio</h2>
+                        <form id="contactForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium mb-2">Nome e Cognome</label>
+                                <input type="text" id="name" class="form-input" placeholder="Mario Rossi" required>
                             </div>
-                            <div class="form-group">
-                                <label for="messaggio">Note aggiuntive</label>
-                                <textarea id="messaggio" name="messaggio" placeholder="Esperienze pregresse, aspettative dal corso..."></textarea>
+                            <div>
+                                <label for="email" class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" id="email" class="form-input" placeholder="mario.rossi@email.com" required>
                             </div>
-                            <button type="submit" class="cta-button" style="width: 100%;">Invia Iscrizione</button>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium mb-2">Telefono</label>
+                                <input type="tel" id="phone" class="form-input" placeholder="+39 123 456 7890">
+                            </div>
+                            <div>
+                                <label for="subject" class="block text-sm font-medium mb-2">Oggetto</label>
+                                <select id="subject" class="form-input">
+                                    <option>Informazioni sui corsi</option>
+                                    <option>Iscrizione al circolo</option>
+                                    <option>Partecipazione eventi</option>
+                                    <option>Altro</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium mb-2">Messaggio</label>
+                                <textarea id="message" class="form-input" placeholder="Scrivi qui il tuo messaggio..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn-primary w-full">Invia Messaggio</button>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- EVENTI PAGE -->
-    <div id="eventi" class="page-container">
-        <div class="window">
-            <div class="window-header">
-                <span class="window-dot dot-red"></span>
-                <span class="window-dot dot-yellow"></span>
-                <span class="window-dot dot-green"></span>
-                <span class="window-title">Eventi e Mostre</span>
-            </div>
-            <div class="window-content">
-                <!-- Evento Futuro -->
-                <div style="margin-bottom: 4rem;">
-                    <h2 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 1.5rem; color: var(--accent-red);">Prossimamente</h2>
-                    <div style="background: rgba(211, 47, 47, 0.1); padding: 2rem; border-radius: 8px; border-left: 4px solid var(--accent-red);">
-                        <h3 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem;">Materiche Impressioni</h3>
-                        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1.1rem;">Mostra fotografica di Patrizia Tessarolo</p>
-                        <p style="line-height: 1.8; margin-bottom: 2rem;">
-                            Un'esplorazione visiva che unisce texture materiche e giochi di luce in un dialogo artistico senza tempo. 
-                            L'autrice ci conduce attraverso impressioni fotografiche che trasformano la materia in poesia visiva, 
-                            dove ogni scatto racconta una storia di superfici, ombre e riflessi.
-                        </p>
+                    <!-- Info e Mappa -->
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6">Dove Trovarci</h2>
                         
-                        <!-- Layout Grid: Locandina + Form -->
-                        <div style="display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2rem;">
-                            <!-- Locandina Mostra -->
-                            <div style="display: flex; justify-content: center; align-items: start;">
-                                <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&amp;h=800&amp;fit=crop" alt="Locandina Materiche Impressioni" style="width: 100%; max-width: 400px; height: auto; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6); border: 1px solid var(--border-subtle);">
+                        <!-- Mappa Simulata -->
+                        <div class="bg-gray-800 rounded-lg h-64 mb-6 flex items-center justify-center overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80" alt="Mappa Marostica" class="w-full h-full object-cover opacity-60">
+                        </div>
+
+                        <!-- Info Contatti -->
+                        <div class="space-y-6">
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl" style="color: #d4af37;">📍</div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-1">Indirizzo</h3>
+                                    <p class="text-gray-400">Via della Fotografia, 79<br>36063 Marostica (VI), Italia</p>
+                                </div>
                             </div>
-                            
-                            <!-- Form Prenotazione Visita -->
-                            <div class="form-container">
-                                <h4 class="form-title">Prenota la tua visita</h4>
-                                <form id="visitaForm" onsubmit="handleVisitaSubmit(event)">
-                                    <div class="form-group">
-                                        <label for="nomeVisita">Nome e Cognome *</label>
-                                        <input type="text" id="nomeVisita" name="nomeVisita" required="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="emailVisita">Email *</label>
-                                        <input type="email" id="emailVisita" name="emailVisita" required="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="dataVisita">Data preferita</label>
-                                        <input type="date" id="dataVisita" name="dataVisita">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="numeroPersone">Numero persone</label>
-                                        <input type="number" id="numeroPersone" name="numeroPersone" min="1" value="1">
-                                    </div>
-                                    <button type="submit" class="cta-button" style="width: 100%;">Prenota Visita</button>
-                                </form>
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl" style="color: #d4af37;">📞</div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-1">Telefono</h3>
+                                    <p class="text-gray-400">+39 0424 123 456</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl" style="color: #d4af37;">✉️</div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-1">Email</h3>
+                                    <p class="text-gray-400">info@marosticafoto1979.it</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <div class="text-3xl" style="color: #d4af37;">🕐</div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-1">Orari di Apertura</h3>
+                                    <p class="text-gray-400">
+                                        Martedì e Giovedì: 18:00 - 21:00<br>
+                                        Sabato: 15:00 - 19:00<br>
+                                        <span class="text-sm">(Durante i corsi e gli eventi)</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Media -->
+                        <div class="mt-8 pt-8 border-t border-gray-800">
+                            <h3 class="font-bold text-lg mb-4">Seguici sui Social</h3>
+                            <div class="flex gap-4">
+                                <a href="#" class="text-3xl hover:text-yellow-500 transition-colors">📘</a>
+                                <a href="#" class="text-3xl hover:text-yellow-500 transition-colors">📷</a>
+                                <a href="#" class="text-3xl hover:text-yellow-500 transition-colors">🐦</a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Archivio Eventi Passati -->
-                <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 2rem; color: var(--text-light);">Archivio Eventi</h2>
-                <div class="eventi-grid">
-                    <div class="evento-card">
-                        <h3>Concorso Fotografico 2025</h3>
-                        <p class="evento-date">Ottobre 2025</p>
-                        <p style="color: var(--text-muted);">Prima edizione del concorso annuale con oltre 150 partecipanti</p>
-                    </div>
-                    <div class="evento-card">
-                        <h3>Workshop Ritratto</h3>
-                        <p class="evento-date">Settembre 2025</p>
-                        <p style="color: var(--text-muted);">Tecniche avanzate di illuminazione per il ritratto fotografico</p>
-                    </div>
-                    <div class="evento-card">
-                        <h3>Mostra Collettiva "Visioni"</h3>
-                        <p class="evento-date">Giugno 2025</p>
-                        <p style="color: var(--text-muted);">Esposizione delle opere dei soci del circolo</p>
-                    </div>
-                </div>
             </div>
-        </div>
+        </section>
+
+        <footer class="py-12 px-6 text-center text-gray-500 border-t border-gray-800">
+            <p>&copy; 2026 Marostica Fotografia 1979. Tutti i diritti riservati.</p>
+        </footer>
     </div>
 
-    <!-- CONTATTI PAGE -->
-    <div id="contatti" class="page-container">
-        <div class="window">
-            <div class="window-header">
-                <span class="window-dot dot-red"></span>
-                <span class="window-dot dot-yellow"></span>
-                <span class="window-dot dot-green"></span>
-                <span class="window-title">Contatti</span>
-            </div>
-            <div class="window-content">
-                <div class="contatti-content">
-                    <!-- Mappa -->
-                    <div>
-                        <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-red);">Dove Siamo</h2>
-                        <div class="map-placeholder">
-                            📍 Mappa interattiva - Corso Mazzini 77, Marostica
-                        </div>
+    <!-- AREA GESTIONE (Dashboard Socio) -->
+    <div id="dashboard" class="page">
+        <section class="py-32 px-6">
+            <div class="max-w-5xl mx-auto">
+                <h1 class="text-5xl font-bold mb-6 text-center" style="color: #d4af37;">Area Socio</h1>
+                <p class="text-xl text-gray-400 text-center mb-16 max-w-2xl mx-auto">
+                    Gestisci il tuo portfolio e carica le tue opere fotografiche.
+                </p>
+
+                <!-- Statistiche -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-center">
+                        <div class="text-4xl mb-2" style="color: #d4af37;">📸</div>
+                        <h3 class="text-3xl font-bold mb-2">23</h3>
+                        <p class="text-gray-400">Foto Caricate</p>
                     </div>
+                    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-center">
+                        <div class="text-4xl mb-2" style="color: #d4af37;">👁️</div>
+                        <h3 class="text-3xl font-bold mb-2">1,247</h3>
+                        <p class="text-gray-400">Visualizzazioni</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 text-center">
+                        <div class="text-4xl mb-2" style="color: #d4af37;">⭐</div>
+                        <h3 class="text-3xl font-bold mb-2">89</h3>
+                        <p class="text-gray-400">Mi Piace</p>
+                    </div>
+                </div>
 
-                    <!-- Info Contatti -->
-                    <div>
-                        <h2 style="font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-red);">Informazioni</h2>
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <span style="font-size: 1.5rem;">📍</span>
-                                <div>
-                                    <strong>Sede</strong><br>
-                                    <span style="color: var(--text-muted);">Corso Mazzini 77<br>36063 Marostica (VI)</span>
-                                </div>
+                <!-- Upload Section -->
+                <div class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-8 md:p-12 mb-12">
+                    <h2 class="text-3xl font-bold mb-8 text-center">Carica Nuova Fotografia</h2>
+                    
+                    <form id="uploadForm" class="space-y-8">
+                        <!-- Drag & Drop Area -->
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📤</div>
+                            <h3 class="text-2xl font-bold mb-2">Trascina qui la tua foto</h3>
+                            <p class="text-gray-400 mb-4">oppure clicca per selezionare un file</p>
+                            <p class="text-sm text-gray-500">Formati supportati: JPG, PNG, TIFF (max 25MB)</p>
+                            <input type="file" id="fileInput" accept="image/*" class="hidden">
+                        </div>
+
+                        <!-- Preview -->
+                        <div id="previewContainer" class="hidden">
+                            <img id="imagePreview" src="" alt="Preview" class="w-full max-h-96 object-contain rounded-lg mb-6">
+                        </div>
+
+                        <!-- Metadata Form -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="photoTitle" class="block text-sm font-medium mb-2">Titolo della Fotografia *</label>
+                                <input type="text" id="photoTitle" class="form-input" placeholder="Es: Tramonto sul Monte Grappa" required>
                             </div>
-                            <div class="contact-item">
-                                <span style="font-size: 1.5rem;">📧</span>
-                                <div>
-                                    <strong>Email</strong><br>
-                                    <span style="color: var(--text-muted);">info@marosticafotografia.it</span>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <span style="font-size: 1.5rem;">🕐</span>
-                                <div>
-                                    <strong>Orari</strong><br>
-                                    <span style="color: var(--text-muted);">Martedì e Giovedì: 20:30 - 22:30</span>
-                                </div>
+                            <div>
+                                <label for="photoCategory" class="block text-sm font-medium mb-2">Categoria</label>
+                                <select id="photoCategory" class="form-input">
+                                    <option>Paesaggio</option>
+                                    <option>Ritratto</option>
+                                    <option>Street Photography</option>
+                                    <option>Natura</option>
+                                    <option>Architettura</option>
+                                    <option>Macro</option>
+                                    <option>Notturna</option>
+                                    <option>Altro</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="social-buttons">
-                            <a href="https://wa.me/393401234567" target="_blank" class="social-button">
-                                💬 WhatsApp
-                            </a>
-                            <a href="https://www.instagram.com/marosticafotografia1979/" target="_blank" class="social-button">
-                                📸 Instagram
-                            </a>
+                        <div>
+                            <label for="photoAlt" class="block text-sm font-medium mb-2">Testo Alternativo (Alt Text) *</label>
+                            <input type="text" id="photoAlt" class="form-input" placeholder="Descrizione breve per accessibilità" required>
+                            <p class="text-sm text-gray-500 mt-2">Descrivi brevemente il contenuto della foto per migliorare l'accessibilità</p>
+                        </div>
+
+                        <div>
+                            <label for="photoDescription" class="block text-sm font-medium mb-2">Descrizione Estesa</label>
+                            <textarea id="photoDescription" class="form-input" placeholder="Racconta la storia dietro questa fotografia..."></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label for="photoLocation" class="block text-sm font-medium mb-2">Luogo</label>
+                                <input type="text" id="photoLocation" class="form-input" placeholder="Es: Marostica, VI">
+                            </div>
+                            <div>
+                                <label for="photoDate" class="block text-sm font-medium mb-2">Data Scatto</label>
+                                <input type="date" id="photoDate" class="form-input">
+                            </div>
+                            <div>
+                                <label for="photoCamera" class="block text-sm font-medium mb-2">Fotocamera</label>
+                                <input type="text" id="photoCamera" class="form-input" placeholder="Es: Canon EOS R5">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div>
+                                <label for="photoIso" class="block text-sm font-medium mb-2">ISO</label>
+                                <input type="text" id="photoIso" class="form-input" placeholder="Es: 400">
+                            </div>
+                            <div>
+                                <label for="photoAperture" class="block text-sm font-medium mb-2">Apertura</label>
+                                <input type="text" id="photoAperture" class="form-input" placeholder="Es: f/2.8">
+                            </div>
+                            <div>
+                                <label for="photoShutter" class="block text-sm font-medium mb-2">Tempo</label>
+                                <input type="text" id="photoShutter" class="form-input" placeholder="Es: 1/250s">
+                            </div>
+                            <div>
+                                <label for="photoLens" class="block text-sm font-medium mb-2">Lente</label>
+                                <input type="text" id="photoLens" class="form-input" placeholder="Es: 24-70mm">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="photoPublic" class="w-5 h-5 bg-gray-800 border-gray-600 rounded">
+                            <label for="photoPublic" class="text-sm">Rendi questa foto pubblica nella galleria del circolo</label>
+                        </div>
+
+                        <div class="flex gap-4 pt-6">
+                            <button type="submit" class="btn-primary flex-1">Carica Fotografia</button>
+                            <button type="button" id="resetForm" class="btn-secondary">Annulla</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Ultimi Upload -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-8">Le Tue Ultime Fotografie</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80" alt="Foto 1" class="w-full h-48 object-cover transition-transform group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all flex items-center justify-center">
+                                <span class="text-white opacity-0 group-hover:opacity-100 transition-opacity">Montagna al Tramonto</span>
+                            </div>
+                        </div>
+                        <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+                            <img src="https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400&q=80" alt="Foto 2" class="w-full h-48 object-cover transition-transform group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all flex items-center justify-center">
+                                <span class="text-white opacity-0 group-hover:opacity-100 transition-opacity">Valle Nebbiosa</span>
+                            </div>
+                        </div>
+                        <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+                            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&q=80" alt="Foto 3" class="w-full h-48 object-cover transition-transform group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all flex items-center justify-center">
+                                <span class="text-white opacity-0 group-hover:opacity-100 transition-opacity">Lago Alpino</span>
+                            </div>
+                        </div>
+                        <div class="relative group cursor-pointer overflow-hidden rounded-lg">
+                            <img src="https://images.unsplash.com/photo-1511576661531-b34d7da5d0bb?w=400&q=80" alt="Foto 4" class="w-full h-48 object-cover transition-transform group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all flex items-center justify-center">
+                                <span class="text-white opacity-0 group-hover:opacity-100 transition-opacity">Via Cittadina</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- POPUP -->
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <h3 class="popup-title" id="popupTitle">Messaggio</h3>
-            <p class="popup-message" id="popupMessage"></p>
-            <button class="popup-close" onclick="closePopup()">Chiudi</button>
-        </div>
+        <footer class="py-12 px-6 text-center text-gray-500 border-t border-gray-800">
+            <p>&copy; 2026 Marostica Fotografia 1979. Tutti i diritti riservati.</p>
+        </footer>
     </div>
 
     <script>
-        // === NAVIGATION SYSTEM ===
-        function navigateTo(page) {
-            // Hide all pages
-            document.querySelectorAll('.page-container').forEach(p => {
-                p.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(page).classList.add('active');
-            
-            // Close mobile menu
-            document.getElementById('navbarLinks').classList.remove('active');
-            document.getElementById('hamburger').classList.remove('active');
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
+        // Navigation System
+        const hamburger = document.getElementById('hamburger');
+        const overlayMenu = document.getElementById('overlayMenu');
+        const navLinks = document.querySelectorAll('[data-page]');
+        const pages = document.querySelectorAll('.page');
 
-        // === HAMBURGER MENU ===
-        function toggleMenu() {
-            document.getElementById('navbarLinks').classList.toggle('active');
-            document.getElementById('hamburger').classList.toggle('active');
-        }
-
-        // === NAVBAR SCROLL EFFECT ===
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+        // Toggle Menu
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            overlayMenu.classList.toggle('active');
         });
 
-        // === HERO SLIDER ===
-        function initHeroSlider() {
-            const heroSlider = document.getElementById('heroSlider');
-            const images = [
-                'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=800',
-                'https://images.unsplash.com/photo-1471341971476-ae15ff5dd4ea?w=800',
-                'https://images.unsplash.com/photo-1495121553079-4c61bcce1894?w=800',
-                'https://images.unsplash.com/photo-1606177321892-5d01e6e1e6b9?w=800'
-            ];
+        // Page Navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetPage = link.getAttribute('data-page');
+                
+                // Hide all pages
+                pages.forEach(page => page.classList.remove('active'));
+                
+                // Show target page
+                document.getElementById(targetPage).classList.add('active');
+                
+                // Close menu
+                hamburger.classList.remove('active');
+                overlayMenu.classList.remove('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
 
-            images.forEach(img => {
-                const div = document.createElement('div');
-                div.className = 'hero-image';
-                div.style.backgroundImage = `url(${img})`;
-                heroSlider.appendChild(div);
+        // Contact Form Handling
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Grazie per averci contattato! Ti risponderemo al più presto.');
+                contactForm.reset();
             });
         }
 
-        // === COUNTDOWN TIMER ===
-        function updateCountdown() {
-            const deadline = new Date('2026-01-23T23:59:59').getTime();
-            const now = new Date().getTime();
-            const distance = deadline - now;
+        // Upload Form Handling
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadForm = document.getElementById('uploadForm');
+        const resetFormBtn = document.getElementById('resetForm');
 
-            if (distance < 0) {
-                document.getElementById('countdownPreview').textContent = 'Iscrizioni chiuse';
-                document.getElementById('countdownFull').textContent = 'Iscrizioni chiuse';
-                return;
+        if (uploadArea && fileInput) {
+            uploadArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#d4af37';
+                uploadArea.style.backgroundColor = '#1a1a1a';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = '#333';
+                uploadArea.style.backgroundColor = 'transparent';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#333';
+                uploadArea.style.backgroundColor = 'transparent';
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect(files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+        }
+
+        function handleFileSelect(file) {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                    uploadArea.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
             }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-            const countdownText = `⏰ ${days}g ${hours}h ${minutes}m`;
-            document.getElementById('countdownPreview').textContent = countdownText;
-            document.getElementById('countdownFull').textContent = countdownText;
         }
 
-        // === FORM HANDLERS ===
-        function handleCorsoSubmit(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData);
-            
-            console.log('Iscrizione Corso:', data);
-            
-            showPopup(
-                'Iscrizione Inviata!',
-                `Grazie ${data.nome}! Riceverai una email di conferma a breve all'indirizzo ${data.email}`
-            );
-            
-            event.target.reset();
+        if (uploadForm) {
+            uploadForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Fotografia caricata con successo! Sarà visibile nella tua galleria.');
+                uploadForm.reset();
+                previewContainer.classList.add('hidden');
+                uploadArea.style.display = 'block';
+            });
         }
 
-        function handleVisitaSubmit(event) {
-            event.preventDefault();
-            const formData = new FormData(event.target);
-            const data = Object.fromEntries(formData);
-            
-            console.log('Prenotazione Visita:', data);
-            
-            showPopup(
-                'Prenotazione Confermata!',
-                `Grazie ${data.nomeVisita}! Ti contatteremo all'indirizzo ${data.emailVisita} per confermare i dettagli della visita`
-            );
-            
-            event.target.reset();
+        if (resetFormBtn) {
+            resetFormBtn.addEventListener('click', () => {
+                uploadForm.reset();
+                previewContainer.classList.add('hidden');
+                uploadArea.style.display = 'block';
+            });
         }
 
-        // === POPUP SYSTEM ===
-        function showPopup(title, message) {
-            document.getElementById('popupTitle').textContent = title;
-            document.getElementById('popupMessage').textContent = message;
-            document.getElementById('popup').classList.add('active');
+        // Pause carousel on hover
+        const carouselTrack = document.querySelector('.carousel-track');
+        if (carouselTrack) {
+            carouselTrack.addEventListener('mouseenter', () => {
+                carouselTrack.style.animationPlayState = 'paused';
+            });
+            
+            carouselTrack.addEventListener('mouseleave', () => {
+                carouselTrack.style.animationPlayState = 'running';
+            });
         }
-
-        function closePopup() {
-            document.getElementById('popup').classList.remove('active');
-        }
-
-        // Close popup on outside click
-        document.getElementById('popup').addEventListener('click', (e) => {
-            if (e.target.id === 'popup') {
-                closePopup();
-            }
-        });
-
-        // === INITIALIZATION ===
-        document.addEventListener('DOMContentLoaded', () => {
-            initHeroSlider();
-            updateCountdown();
-            setInterval(updateCountdown, 60000); // Update every minute
-        });
     </script>
+</body>
+</html>
 
-
-
-</body></html>
